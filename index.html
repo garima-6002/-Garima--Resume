@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garima - Resume</title>
+    <style>
+        /* CSS Reset and Box Model */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            box-sizing: border-box;
+        }
+
+        /* Font Imports - Reflecting Professional Personality */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
+        /* CSS Custom Properties - Elegant Teal & Beige Aesthetic */
+        :root {
+            --primary-color: #2A9D8F;      /* Teal Green */
+            --secondary-color: #E9C46A;    /* Sand Gold */
+            --accent-color: #457B9D;       /* Steel Blue */
+            --light-bg: #F8F7F4;           /* Soft Beige */
+            --white: #ffffff;
+            --text-dark: #264653;
+            --text-light: #6c757d;
+            --gradient-primary: linear-gradient(135deg, #2A9D8F 0%, #264653 100%);
+            --gradient-secondary: linear-gradient(45deg, #2A9D8F 0%, #E9C46A 100%);
+            --shadow-light: 0 2px 10px rgba(42,157,143,0.1);
+            --shadow-medium: 0 4px 20px rgba(42,157,143,0.15);
+        }
+
+        /* Element Selectors - Base Styling */
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Class Selectors - Component Styling */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 4px solid var(--secondary-color);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-secondary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .skill-bar-container {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1.5s ease-in-out;
+            background: var(--gradient-secondary);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .experience-item {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* ID Selectors - Unique Components */
+        #header {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s infinite linear;
+        }
+
+        #profile-avatar {
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 0 auto 2rem;
+            border: 4px solid rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        #navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(38, 70, 83, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        #navigation.visible {
+            transform: translateY(0);
+        }
+
+        #nav-list {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        #nav-list a {
+            color: var(--white);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        #nav-list a:hover {
+            background: var(--secondary-color);
+            color: var(--text-dark);
+        }
+
+        #skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        #footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Display and Positioning Properties */
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        /* Animations and Keyframes */
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            #skills-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            #nav-list {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Text Formatting and Spacing */
+        .lead-text {
+            font-size: 1.3rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        .highlight {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .spacing-sm {
+            margin-bottom: 1rem;
+        }
+
+        .spacing-md {
+            margin-bottom: 2rem;
+        }
+
+        .spacing-lg {
+            margin-bottom: 3rem;
+        }
+
+        /* Enhanced degree visibility */
+        .degree-title {
+            color: var(--text-dark) !important;
+            font-weight: 700 !important;
+            font-size: 1.6rem !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav id="navigation">
+        <div class="container">
+            <ul id="nav-list">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header id="header">
+        <div class="container">
+            <div id="profile-avatar" class="fade-in-up">
+                G
+            </div>
+            <h1 class="fade-in-up">Garima</h1>
+            <p class="lead-text fade-in-up" style="animation-delay: 0.2s;">
+                <span class="highlight">Student</span> • Digital Business & Entrepreneurship
+            </p>
+            <div class="contact-links fade-in-up" style="animation-delay: 0.4s;">
+                <a href="mailto:garimasa87@gmail.com" class="btn btn-secondary">
+                    📧 garimasa87@gmail.com
+                </a>
+                <a href="tel:+919991033676" class="btn btn-secondary">
+                    📱 (+91) 99910-33676
+                </a>
+                <a href="https://www.linkedin.com/in/garima-sarswal-1664a9343" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                    💼 LinkedIn
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container spacing-lg">
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="card">
+                <h2 class="section-title">About Me</h2>
+                <p class="lead-text">
+                    Digital business and entrepreneurship student at <span class="highlight">IIM Bangalore</span>. 
+                    Adaptable, hard-working, and ready to tackle new challenges to make an impact.
+                    I am looking forward for my <span class="highlight">first work experience</span>.
+                </p>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <div class="card">
+                <h2 class="section-title">Experience & Projects</h2>
+                
+                <div class="spacing-md">
+                    <div class="experience-item">
+                        <h3>Project Lead – Social Media Marketing Campaign</h3>
+                        <p class="highlight spacing-sm">College Project</p>
+                        <ul class="spacing-sm">
+                            <li>• Led a comprehensive social media marketing campaign as part of coursework</li>
+                            <li>• Developed strategic marketing plans and executed campaigns across multiple platforms</li>
+                            <li>• Analyzed campaign performance and provided actionable insights</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <h3>Website Development Project</h3>
+                        <p class="highlight spacing-sm">Academic Coursework</p>
+                        <ul class="spacing-sm">
+                            <li>• Developed a fully functional website using HTML and CSS</li>
+                            <li>• Applied web development principles learned in coursework</li>
+                            <li>• Demonstrated technical skills and attention to detail</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <h3>Seeking First Work Experience</h3>
+                        <p class="highlight spacing-sm">Current Focus</p>
+                        <ul class="spacing-sm">
+                            <li>• Actively seeking opportunities to apply skills and gain practical experience</li>
+                            <li>• Ready to contribute to meaningful projects and learn from industry professionals</li>
+                            <li>• Eager to bring fresh perspectives and enthusiasm to a dynamic team</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="card">
+                <h2 class="section-title">Skills</h2>
+                
+                <div id="skills-grid">
+                    <div>
+                        <h3 class="spacing-md">Technical Skills</h3>
+                        <div class="spacing-md">
+                            <div class="skill-item">
+                                <div class="skill-name">
+                                    <span>Data Analysis & Excel</span>
+                                    <span class="highlight">85%</span>
+                                </div>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar" style="width: 0%" data-width="85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-name">
+                                    <span>HTML & CSS</span>
+                                    <span class="highlight">80%</span>
+                                </div>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar" style="width: 0%" data-width="80%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-name">
+                                    <span>Social Media Management</span>
+                                    <span class="highlight">90%</span>
+                                </div>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar" style="width: 0%" data-width="90%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-name">
+                                    <span>Presentation Skills</span>
+                                    <span class="highlight">85%</span>
+                                </div>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar" style="width: 0%" data-width="85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="spacing-md">Languages & Tools</h3>
+                        <div class="spacing-md">
+                            <h4 class="spacing-sm">Languages</h4>
+                            <div class="spacing-md">
+                                <span class="tag">Native Hindi</span>
+                                <span class="tag">Fluent English</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="spacing-sm">Tools & Software</h4>
+                            <div>
+                                <span class="tag">Excel</span>
+                                <span class="tag">Google Sheets</span>
+                                <span class="tag">PowerPoint</span>
+                                <span class="tag">VLOOKUP</span>
+                                <span class="tag">Pivot Tables</span>
+                                <span class="tag">Financial Modeling</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="section">
+            <div class="card">
+                <h2 class="section-title">Education</h2>
+                
+                <div class="experience-item">
+                    <h3 class="degree-title">Business Administration in Digital Business and Entrepreneurship</h3>
+                    <p class="highlight spacing-sm">Indian Institute of Management Bangalore • 2024 - 2027</p>
+                    <p class="spacing-sm">Currently pursuing • In Progress</p>
+                    <p>Focus Areas: Digital Business Strategy, Entrepreneurship, Data Analysis, Marketing</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="card">
+                <h2 class="section-title">Featured Projects</h2>
+                
+                <div class="project-grid">
+                    <div class="card">
+                        <h3 class="spacing-sm">Social Media Marketing Campaign</h3>
+                        <p class="spacing-md">Led a comprehensive social media marketing campaign as part of college coursework, developing strategic plans and analyzing performance metrics.</p>
+                        <div class="spacing-md">
+                            <span class="tag">Marketing Strategy</span>
+                            <span class="tag">Social Media</span>
+                            <span class="tag">Analytics</span>
+                        </div>
+                        <span class="highlight">College Project</span>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="spacing-sm">Website Development</h3>
+                        <p class="spacing-md">Developed a fully functional website using HTML and CSS as part of academic coursework, demonstrating technical skills and web development principles.</p>
+                        <div class="spacing-md">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">Web Design</span>
+                        </div>
+                        <span class="highlight">Academic Project</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="card text-center" style="background: var(--gradient-primary); color: var(--white);">
+                <h2 class="section-title" style="color: var(--white); border-color: rgba(255,255,255,0.3);">Let's Work Together</h2>
+                <p class="lead-text spacing-lg" style="color: rgba(255,255,255,0.9);">Ready to bring your ideas to life? I'd love to hear from you!</p>
+                <div class="contact-links">
+                    <a href="mailto:garimasa87@gmail.com" class="btn btn-secondary">
+                        Send Email
+                    </a>
+                    <a href="#" onclick="downloadResume()" class="btn btn-primary">
+                        Download Resume
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <p>&copy; 2024 Garima. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Show navigation on scroll
+        function handleNavigation() {
+            const nav = document.getElementById('navigation');
+            const scrollPosition = window.scrollY;
+            
+            if (scrollPosition > 100) {
+                nav.classList.add('visible');
+            } else {
+                nav.classList.remove('visible');
+            }
+        }
+
+        // Smooth scroll for navigation links
+        function setupSmoothScroll() {
+            const navLinks = document.querySelectorAll('#nav-list a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Animate skill bars when they come into view
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 200);
+            });
+        }
+
+        // Animate sections on scroll with enhanced intersection observer
+        function animateOnScroll() {
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // Animate skill bars if this section contains them
+                        if (entry.target.querySelector('.skill-bar')) {
+                            setTimeout(animateSkillBars, 500);
+                        }
+                    }
+                });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // Enhanced download resume function
+        function downloadResume() {
+            const resumeContent = `
+GARIMA
+Student - Digital Business and Entrepreneurship
+Email: garimasa87@gmail.com | Phone: (+91) 99910-33676
+LinkedIn: www.linkedin.com/in/garima-sarswal-1664a9343
+
+PROFILE
+Digital business and entrepreneurship student at IIM Bangalore.
+Adaptable, hard-working, and ready to tackle new challenges to make an impact.
+Looking forward for my first work experience.
+
+EXPERIENCE & PROJECTS
+Project Lead – Social Media Marketing Campaign (College Project)
+- Led a comprehensive social media marketing campaign as part of coursework
+- Developed strategic marketing plans and executed campaigns across multiple platforms
+- Analyzed campaign performance and provided actionable insights
+
+Website Development Project (Academic Coursework)
+- Developed a fully functional website using HTML and CSS
+- Applied web development principles learned in coursework
+- Demonstrated technical skills and attention to detail
+
+SKILLS
+Technical Skills:
+- Data Analysis & Excel (85%)
+- HTML & CSS (80%)
+- Social Media Management (90%)
+- Presentation Skills (85%)
+
+Tools & Software: Excel, Google Sheets, PowerPoint, VLOOKUP, Pivot Tables, Financial Modeling
+
+LANGUAGES
+Native Hindi, Fluent English
+
+EDUCATION
+Business Administration in Digital Business and Entrepreneurship
+Indian Institute of Management Bangalore (2024-2027)
+Currently pursuing - In Progress
+Focus Areas: Digital Business Strategy, Entrepreneurship, Data Analysis, Marketing
+            `;
+            
+            const blob = new Blob([resumeContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Garima_Resume.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Initialize all functionality when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            animateOnScroll();
+            setupSmoothScroll();
+            
+            // Add scroll event listener for navigation
+            window.addEventListener('scroll', handleNavigation);
+            
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98a508c7a7b790d6',t:'MTc1OTc1MjQwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
